@@ -25,4 +25,7 @@ def home():
 
 
 
-
+#If the user wants to run just the parser instead:
+if __name__ == "__main__":
+    manifest = parse_manifest("sample_manifests/deployment.yaml")
+    print(manifest)
