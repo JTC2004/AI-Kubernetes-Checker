@@ -13,14 +13,27 @@
 #   - Venv is a virtual environment where I can install Python independencies without effecting the rest of my PC!
 #
 
+#How to run:        uvicorn src.main:app --reload
+
 #Imports:
 from fastapi import FastAPI
+from src.parser import parse_manifest
 
 app = FastAPI()
 
+#The different web pages of the app:
 @app.get("/")
 def home():
     return {"message": "Kubernetes Readiness Advisor"}
+
+@app.get("/analyze")
+def analyze():
+    manifest = parse_manifest("deployment.yaml")
+
+    return {
+        "kind": manifest["kind"],
+        "name": manifest["metadata"]["name"]
+    }
 
 
 

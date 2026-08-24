@@ -7,14 +7,18 @@
 #Imports:
 import yaml
 
-#Open the yaml file ("r" means read mode):
-with open("sample_manifests/deployment.yaml", "r") as file:
-    obj_manifest = yaml.safe_load(file)                         #This creates a dictionary object containing the yaml data.
-                                                                #Similar to a JSON object.
+def parse_manifest(str_filename):
 
-    print(obj_manifest)                                         #Prints the yaml data.
+    #Open the yaml file ("r" means read mode):
+    with open("sample_manifests/" + str_filename, "r") as file:
+        obj_manifest = yaml.safe_load(file)                         #This creates a dictionary object containing the yaml data.
+                                                                    #Similar to a JSON object.
 
-    print(obj_manifest["metadata"]["name"])                     #Print just the name of the manifest.
-    print(obj_manifest["kind"])                                 #Print just the kind of the manifest.
+        print(obj_manifest)                                         #Prints the yaml data.
+
+        #print(obj_manifest["metadata"]["name"])                     #Print just the name of the manifest.
+        #print(obj_manifest["kind"])                                 #Print just the kind of the manifest.
+
+        return obj_manifest
 
 
