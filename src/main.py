@@ -19,6 +19,9 @@
 from fastapi import FastAPI
 from src.parser import parse_manifest
 
+#Rules:
+from src.rules import check_latest_image
+
 app = FastAPI()
 
 #The different web pages of the app:
@@ -30,9 +33,12 @@ def home():
 def analyze():
     manifest = parse_manifest("deployment.yaml")
 
+    print()
+
     return {
         "kind": manifest["kind"],
-        "name": manifest["metadata"]["name"]
+        "name": manifest["metadata"]["name"],
+        "lastest?": check_latest_image(manifest)
     }
 
 
