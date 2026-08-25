@@ -11,19 +11,28 @@ from src.parser import parse_manifest
 def check_latest_image(_manifest):
 
     #Open the yaml file:
-    str_image = (_manifest
+    container = (_manifest
                 ["spec"]
                 ["template"]
                 ["spec"]
                 ["containers"]
                 [0]
-                ["image"]
     )
 
-    if str_image.endswith(":latest"): return "Image is latest!"
+    if container["image"].endswith(":latest"): return "Image is latest!"
     else: return "Image is not latest."
 
 
+def check_resource_limits(_manifest):
 
+    container = (_manifest
+                ["spec"]
+                ["template"]
+                ["spec"]
+                ["containers"]
+                [0]
+    )
 
+    if (container.get("resources") is None): return "Warning - No resource limit."
+    else: return f"Resource limit(s) is {container["resources"]["requests"]}"
 

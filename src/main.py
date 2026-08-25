@@ -21,6 +21,7 @@ from src.parser import parse_manifest
 
 #Rules:
 from src.rules import check_latest_image
+from src.rules import check_resource_limits
 
 app = FastAPI()
 
@@ -38,7 +39,8 @@ def analyze():
     return {
         "kind": manifest["kind"],
         "name": manifest["metadata"]["name"],
-        "lastest?": check_latest_image(manifest)
+        "latest?": check_latest_image(manifest),
+        "resources?": check_resource_limits(manifest)
     }
 
 
