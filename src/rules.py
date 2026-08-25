@@ -1,6 +1,7 @@
 #Author:            Jared Crow
 #Date created:      8/25/26
 #Description:       This file is for conducting rules on yaml objects.
+#                   Each rule should only check ONE thing!
 
 #How to run:        python src/rules.py 
 
@@ -19,7 +20,7 @@ def check_latest_image(_manifest):
                 [0]
     )
 
-    if container["image"].endswith(":latest"): return "Image is latest!"
+    if container["image"].endswith(":latest"): return "Image is latest."
     else: return "Image is not latest."
 
 

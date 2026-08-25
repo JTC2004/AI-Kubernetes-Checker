@@ -25,6 +25,12 @@ from src.rules import check_resource_limits
 
 app = FastAPI()
 
+#Variables:
+rules = {
+    "latestImage": "",
+    "hasResources": "",
+}
+
 #The different web pages of the app:
 @app.get("/")
 def home():
@@ -34,13 +40,15 @@ def home():
 def analyze():
     manifest = parse_manifest("deployment.yaml")
 
-    print()
+    #Check compliance with rules:
+    rules["latestImage"] = check_latest_image(manifest)
+    rules["hasResources"] = check_resource_limits(manifest)
 
     return {
         "kind": manifest["kind"],
         "name": manifest["metadata"]["name"],
-        "latest?": check_latest_image(manifest),
-        "resources?": check_resource_limits(manifest)
+        "Has latest image?": rules["latestImage"],
+        "Has resources?": rules["hasResources"]
     }
 
 
