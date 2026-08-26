@@ -16,8 +16,6 @@
 import yaml
 from src.parser import parse_manifest
 
-manifest = None
-
 
 #Run different kinds of rule checks based on what kind of yaml file is being read:
 def checkRules(_manifest):

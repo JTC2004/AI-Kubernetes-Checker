@@ -23,6 +23,9 @@ What to know before running:
                                             highlighting, tree views, and formatted logging.
         pip install pytest               Used for writing/running automated unit & integration tests for my Python code.
 
+        pip install ollama
+        pip install python-dotenv
+
 
 Once the setup is done, use the following command to run the program inside the virtual environment:
     uvicorn src.main:app --reload

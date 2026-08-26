@@ -1,5 +1,6 @@
 #Author:            Jared Crow
 #Date started:      8/23/26
+#How to run:        uvicorn src.main:app --reload
 
 #Problem statement: Kubernetes configuration issues are often discovered late in the development process, 
 #                   causing unnecessary review cycles, delayed deployments, and repeated manual guidance 
@@ -9,11 +10,16 @@
 #                   identifies production-readiness issues, explains why they matter, 
 #                   and then recommends concrete fixes before code reaches CI/CD or production.
 
+#How it works:
+#   Step 1: Read & parse JSON into a manifest (Python object) in parser.py.
+#   Step 2: Test the data against rules to answer factual questions about the data in rules.py.
+#       - That way, when the AI reads the data, it doesn't have to read the raw YAML data.
+#   Step 3: Use a Local LLM to The LLM should instead answer: "How do I explain these findings to a developer?"
+#   Step 4: 
+
 #Notes for myself:
 #   - Venv is a virtual environment where I can install Python independencies without effecting the rest of my PC!
-#
 
-#How to run:        uvicorn src.main:app --reload
 
 #Imports:
 from fastapi import FastAPI
@@ -35,6 +41,8 @@ def home():
 @app.get("/analyze")
 def analyze():
     manifest = parse_manifest("deployment.yaml")
+
+    #[Print AI response here]
 
     #Check compliance with rules:
     return checkRules(manifest)
