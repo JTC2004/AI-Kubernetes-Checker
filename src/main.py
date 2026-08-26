@@ -39,15 +39,6 @@ def analyze():
     #Check compliance with rules:
     return checkRules(manifest)
 
-    #return {
-    #    "kind": manifest["kind"],
-    #    "name": manifest["metadata"]["name"],
-    #    "Has latest image?": rules["image"],
-    #    "Has resources?": rules["resources"],
-    #    "Has readiness probe?": rules["readinessProbe"],
-    #    "Has liveness probe?": rules["livenessProbe"],
-    #}   
-
 
 
 

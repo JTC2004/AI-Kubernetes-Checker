@@ -22,12 +22,12 @@ manifest = None
 #Run different kinds of rule checks based on what kind of yaml file is being read:
 def checkRules(_manifest):
     manifest = _manifest            #The yaml data object read from the yaml file.
+    analysis = None                 #Will hold the final analysis results when returned.
     rules = None                    #Will equal a dictionary of rules and their results.
 
+    #Gathering the results of checking data against the rules:
     if(manifest["kind"] == "Deployment"):
         rules = {
-            "kind": manifest["kind"],
-            "name": manifest["metadata"]["name"],
             "image": check_latest_image(manifest),
             "resources": check_resource_limits(manifest),
             "readinessProbe": check_readiness_probe(manifest),
@@ -38,26 +38,60 @@ def checkRules(_manifest):
             "kind": "Warning: Not a valid kind of yaml file.",
         }
 
+    #Creating the final analysis:
+    analysis = {
+        "kind": manifest["kind"],
+        "name": manifest["metadata"]["name"],
+        "findings": [rules]
+    }
 
-    return rules
+
+    return analysis
 
 
 #The rules:
 def check_latest_image(_manifest):
 
-    #Open the yaml file:
     container = getContainer(_manifest)
 
-    if container["image"].endswith(":latest"): return "Image is latest."
-    else: return "Image is not latest."
+    if (not container["image"].endswith(":latest")):
+        return {
+            "severity": "Warning",
+            "rule": "Latest Image Tag",
+            "container": container.get("name"),
+            "description": "The container uses the 'latest' image tag.",
+            "recommendation": "Use a specific version tag (for example, nginx:1.27)."
+        }
+
+    return {
+        "severity": "None",
+        "rule": "Pinned Image Version",
+        "container": container.get("name"),
+        "description": "The container uses a specific image version.",
+        "recommendation": "N/A"
+    }
 
 
 def check_resource_limits(_manifest):
 
     container = getContainer(_manifest)
 
-    if (container.get("resources") is None): return "Warning: No resource limit."
-    else: return f"Resource limit(s) is {container["resources"]["requests"]}"
+    if container.get("resources") is None:
+        return {
+            "severity": "Warning",
+            "rule": "Missing Resource Limits",
+            "container": container.get("name"),
+            "description": "The container does not define CPU or memory resources.",
+            "recommendation": "Add resource requests and limits."
+        }
+
+    return {
+        "severity": "None",
+        "rule": "Resource Limits Configured",
+        "container": container.get("name"),
+        "description": "The container defines resource requests and limits.",
+        "recommendation": "N/A"
+    }
 
 
 #A readiness probe tells Kubernetes: "Is my application ready to receive user traffic?"
@@ -65,8 +99,21 @@ def check_readiness_probe(_manifest):
 
     container = getContainer(_manifest)
 
-    if (container.get("readinessProbe") is None): return "Warning: No readiness probe."
-    else: return f"Readiness Probe limit(s) is {container["readinessProbe"]["httpGet"]}"
+    if (container.get("readinessProbe") is None): return {
+        "severity": "Warning",
+        "rule": "Missing Readiness Probe",
+        "container": container.get("name"),
+        "description": "The container has no readiness probe.",
+        "recommendation": "Add a readinessProbe."
+    }
+
+    return {
+        "severity": "None",
+        "rule": "Has A Readiness Probe",
+        "container": container.get("name"),
+        "description": "The container has a readiness probe.",
+        "recommendation": "N/A"
+    }
 
 
 #A liveness probe tells Kubernetes: "Is my application still alive?"
@@ -74,9 +121,22 @@ def check_liveness_probe(_manifest):
 
     container = getContainer(_manifest)
 
-    if (container.get("livenessProbe") is None): return "Warning: No liveness probe."
-    else: return f"Liveness Probe limit(s) is {container["livenessProbe"]["httpGet"]}"
+    if container.get("livenessProbe") is None:
+        return {
+            "severity": "Warning",
+            "rule": "Missing Liveness Probe",
+            "container": container.get("name"),
+            "description": "The container has no liveness probe.",
+            "recommendation": "Add a livenessProbe."
+        }
 
+    return {
+        "severity": "None",
+        "rule": "Has A Liveness Probe",
+        "container": container.get("name"),
+        "description": "The container has a liveness probe.",
+        "recommendation": "N/A"
+    }
 
 
 #Repeated code actions:
