@@ -21,8 +21,8 @@ manifest = None
 
 #Run different kinds of rule checks based on what kind of yaml file is being read:
 def checkRules(_manifest):
-    manifest = _manifest
-    rules = None
+    manifest = _manifest            #The yaml data object read from the yaml file.
+    rules = None                    #Will equal a dictionary of rules and their results.
 
     if(manifest["kind"] == "Deployment"):
         rules = {
@@ -42,7 +42,7 @@ def checkRules(_manifest):
     return rules
 
 
-
+#The rules:
 def check_latest_image(_manifest):
 
     #Open the yaml file:
