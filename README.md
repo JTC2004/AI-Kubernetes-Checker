@@ -38,7 +38,7 @@ What to know/do before running:
 
 8) Finally, while the program is running, go to the directory [your localhost directory here]/analyze to run the LLM.
     - For example: http://127.0.0.1:8000/analyze
-    - Doing so will output the LLM's response to your terminal, which may take up to a few minutes while the LLM is 'thinking'.
+    - Doing so will output the LLM's response to your terminal, which may take 1 to 5 minutes while the LLM is 'thinking'.
 
 Type deactivate to exit the virtual environment.
 
