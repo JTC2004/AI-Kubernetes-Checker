@@ -21,13 +21,6 @@ What to know/do before running:
         pip install fastapi              For building REST APIs quickly.
         pip install uvicorn              Actually hosts the API.
         pip install pyyaml               Reads & writers YAML files.
-        pip install pydantic             Helps w/ maintainability. Validates, parses, and serializes Python data 
-                                            using type hints.
-        pip install jinja2               A templating engine for generating HTML or text files by inserting data 
-                                            into templates.
-        pip install rich                 Makes terminal output nicer with colors, tables, progress bars, syntax 
-                                            highlighting, tree views, and formatted logging.
-        pip install pytest               Used for writing/running automated unit & integration tests for my Python code.
 
         pip install ollama
         pip install python-dotenv
@@ -44,3 +37,14 @@ Once the setup is done, use the following command to run the program inside the 
     uvicorn src.main:app --reload
 
 Type deactivate to exit the virtual environment.
+
+
+Extra:
+    Planned/future dependencies:
+        pip install pydantic             Helps w/ maintainability. Validates, parses, and serializes Python data 
+                                            using type hints.
+        pip install jinja2               A templating engine for generating HTML or text files by inserting data 
+                                            into templates.
+        pip install rich                 Makes terminal output nicer with colors, tables, progress bars, syntax 
+                                            highlighting, tree views, and formatted logging.
+        pip install pytest               Used for writing/running automated unit & integration tests for my Python code.
