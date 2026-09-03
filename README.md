@@ -1,6 +1,8 @@
 # Kubernetes-health-dashboard
 An AI-assisted deployment readiness analyzer that reviews Kubernetes manifests, identifies production-readiness issues, explains why they matter, and recommends concrete fixes before code reaches CI/CD or production.
 
+Note: This project currently only supports one kind of Kubernetes format. Support for multiple formats will be added in future development.
+
 What to know before running:
     - This project uses a virtual environment called venv, 
     which requires you to install dependencies inside of in order to run.
